@@ -19,12 +19,13 @@ class Armor:
         return block
 
 class Hero:
-    def __init__(self, name, starting_health):
+    def __init__(self, name, starting_health=100):
         self.name = name
         self.starting_heatlh = starting_health
         self.abilities = []
         self.armors = []
         self.current_health = starting_health
+
 
     def add_ability(self, ability):
         """ Add Ability"""
@@ -46,12 +47,45 @@ class Hero:
     def take_damage(self, damage):
         self.current_health -= max(0, damage - self.defend())
 
+
+#really simple code i love this either true or flase
+    def is_alive(self):
+
+        return self.current_health > 0
+
+    def fight(self, opponent):
+        if not self.abilities and not opponent.abilities:
+            print('Draw!')
+            return
+
+        while self.is_alive() and opponent.is_alive():
+            self.take_damage(opponent.attack())
+            opponent.take_damage(self.attack())
+
+        if self.is_alive():
+            print(f"{opponent.name} has died")
+        elif opponent.is_alive():
+            print(f"{self.name} is is dead!")
+        else:
+            print("both heros have died!")
+
+  #
+  # ''' Current Hero will take turns fighting the opponent hero passed in.
+  # '''
+  # TODO: Fight each hero until a victor emerges.
+  # Print the victor's name to the screen.
 if __name__ == "__main__":
     # If you run this file from the terminal
-    # this block of code is executed.
+    # this block is executed.
 
-    hero = Hero("Grace Hopper", 200)
-    shield = Armor("Shield", 50)
-    hero.add_armor(shield)
-    hero.take_damage(50)
-    print(hero.current_health)
+    hero1 = Hero("Wonder Woman")
+    hero2 = Hero("Dumbledore")
+    ability1 = Ability("Super Speed", 200)
+    ability2 = Ability("Super Eyes", 130)
+    ability3 = Ability("Wizard Wand", 180)
+    ability4 = Ability("Wizard Beard", 120)
+    hero1.add_ability(ability1)
+    hero1.add_ability(ability2)
+    hero2.add_ability(ability3)
+    hero2.add_ability(ability4)
+    hero1.fight(hero2)
