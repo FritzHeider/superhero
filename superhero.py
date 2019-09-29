@@ -69,6 +69,14 @@ class Hero:
         else:
             print("both heros have died!")
 
+class Weapon(Ability):
+ """Subclass of Ability"""
+    def attack(self):
+        att = random.randint(self.attack_strength // 2, self.attack_strength)
+        return att
+
+
+
   #
   # ''' Current Hero will take turns fighting the opponent hero passed in.
   # '''
