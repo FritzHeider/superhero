@@ -70,18 +70,30 @@ class Hero:
             print("both heros have died!")
 
 class Weapon(Ability):
- """Subclass of Ability"""
     def attack(self):
         att = random.randint(self.attack_strength // 2, self.attack_strength)
         return att
 
+class Team:
+    def __init__(self, name):
+        self.name = name
+        self.heroes = {}
+
+    def remove_hero(self, name):
+
+            return self.heroes.pop(name) if name is self.heroes.keys() else 0
 
 
+    def view_all_heroes(self):
+        '''Prints out all heroes to the console.'''
+        print([self.heroes.keys()])
+        # TODO: Loop over the list of heroes and print their names to the terminal.
+
+    def add_hero(self, hero):
+
+        self.heroes[hero.name] = hero
   #
-  # ''' Current Hero will take turns fighting the opponent hero passed in.
-  # '''
-  # TODO: Fight each hero until a victor emerges.
-  # Print the victor's name to the screen.
+
 if __name__ == "__main__":
     # If you run this file from the terminal
     # this block is executed.
