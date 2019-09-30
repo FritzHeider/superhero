@@ -25,6 +25,17 @@ class Hero:
         self.abilities = []
         self.armors = []
         self.current_health = starting_health
+        self.deaths = 0
+        self.kills = 0
+
+    def add_kill(self, num_kills):
+        self.kills = self.kills + num_kills
+
+    def add_deaths(self, num_deaths):
+        self.deaths = self.deaths = num_deaths
+        
+
+
 
 
     def add_ability(self, ability):
@@ -92,20 +103,10 @@ class Team:
     def add_hero(self, hero):
 
         self.heroes[hero.name] = hero
-  #
+
 
 if __name__ == "__main__":
     # If you run this file from the terminal
     # this block is executed.
 
-    hero1 = Hero("Wonder Woman")
-    hero2 = Hero("Dumbledore")
-    ability1 = Ability("Super Speed", 200)
-    ability2 = Ability("Super Eyes", 130)
-    ability3 = Ability("Wizard Wand", 180)
-    ability4 = Ability("Wizard Beard", 120)
-    hero1.add_ability(ability1)
-    hero1.add_ability(ability2)
-    hero2.add_ability(ability3)
-    hero2.add_ability(ability4)
-    hero1.fight(hero2)
+    pass
