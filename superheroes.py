@@ -35,10 +35,6 @@ class Hero:
     def add_deaths(self, num_deaths):
         self.deaths = self.deaths + num_deaths
 
-
-
-
-
     def add_ability(self, ability):
         """ Add Ability"""
 
@@ -62,18 +58,7 @@ class Hero:
     def add_weapon(self, weapon):
         self.abilities.append(weapon)
 
-    def steal(self):
-        if self.steal > 0:
-            print(f'Magic gem activated! you have {self.steal} magic sneak chances')
-            guess = input('please guess a number between 1 and 10 >')
-            pick = randint(0, 10)
-            if guess == pick:
-            print("wow you actually won!")
 
-
-
-
-#really simple code i love this either true or flase
     def is_alive(self):
 
         return self.current_health > 0
@@ -110,7 +95,6 @@ class Team:
         self.name = name
         self.heroes = []
 
-
     def remove_hero(self, name):
         index = 0
         length = len(self.heroes)
@@ -122,14 +106,9 @@ class Team:
         if len(self.heroes) == length:
             return 0
 
-
     def view_all_heroes(self):
         for hero in self.heroes:
             print(hero.name)
-
-        '''Prints out all heroes to the console.'''
-
-        # TODO: Loop over the list of heroes and print their names to the terminal.
 
     def add_hero(self, hero):
 
@@ -215,32 +194,82 @@ class Arena:
 
         return hero
 
-def build_team_one(self):
-        team_number = int(input("How many heroes would you like on this team? "))
-        team_name = input("Please choose a team name: ")
-        self.team_one = Team(team_name)
-        for i in range(team_number):
-            hero = self.create_hero()
-            self.team_one.heroes.append(hero)
-            i += 1
-            i -= 1
-        return self.team_one
+    def build_team_one(self):
+            team_number = int(input("How many heroes would you like on this team? "))
+            team_name = input("Please choose a team name: ")
+            self.team_one = Team(team_name)
+            for i in range(team_number):
+                hero = self.create_hero()
+                self.team_one.heroes.append(hero)
+                i += 1
+                i -= 1
+            return self.team_one
 
-def build_team_two(self):
-        team_number = int(input("How many heroes would you like on this team? "))
-        team_name = input("Please choose a team name: ")
-        self.team_two = Team(team_name)
-        for i in range(team_number):
-            hero = self.create_hero()
-            self.team_two.heroes.append(hero)
-            i += 1
-            i -= 1
-        return self.team_two
+    def build_team_two(self):
+            team_number = int(input("How many heroes would you like on this team? "))
+            team_name = input("Please choose a team name: ")
+            self.team_two = Team(team_name)
+            for i in range(team_number):
+                hero = self.create_hero()
+                self.team_two.heroes.append(hero)
+                i += 1
+                i -= 1
+            return self.team_two
 
+    def team_battle(self):
+            team_one = self.team_one
+            team_two = self.team_two
+            team_one.attack(team_two)
 
+    def team_kda(self, team):
+            team_deaths = 0
+            team_kills = 0
+            for hero in team.heroes:
+                team_deaths += hero.deaths
+                team_kills += hero.kills
+            if team_deaths < 1:
+                team_kda = team_kills
+            else:
+                team_kda = team_kills // team_deaths
+            return team_kda
+
+    def winner(self):
+            if self.team_kda(self.team_one) > self.team_kda(self.team_two):
+                return self.team_one
+            else:
+                return self.team_two
+
+    def loser(self):
+            if self.team_kda(self.team_one) < self.team_kda(self.team_two):
+                return self.team_one
+            else:
+                return self.team_two
+    def alive_heroes(self):
+            alive_heroes = []
+            for hero in self.winner().team_members_alive():
+                alive_heroes.append(hero.name)
+            return alive_heroes
+    def show_stats(self):
+            print(f"Winning team: {self.winner().name}" )
+            print(f"Alive heroes: {self.alive_heroes()}")
+            print(f"Winning team's KDA: {self.team_kda(self.winner())}")
+            print(f"Losing team's KDA: {self.team_kda(self.loser())}")
 
 if __name__ == "__main__":
-    # If you run this file from the terminal
-    # this block is executed.
+        game_is_running = True
+        arena = Arena()
+        arena.build_team_one()
+        arena.build_team_two()
 
-    pass
+        while game_is_running:
+            arena.team_battle()
+            arena.show_stats()
+            play_again = input("Play Again? Y or N: ")
+
+            if play_again.lower() == "n":
+                game_is_running = False
+
+            else:
+                #Revive heroes to play again
+                arena.team_one.revive_heroes()
+                arena.team_two.revive_heroes()
