@@ -33,7 +33,7 @@ class Hero:
 
     def add_deaths(self, num_deaths):
         self.deaths = self.deaths = num_deaths
-        
+
 
 
 
@@ -88,21 +88,31 @@ class Weapon(Ability):
 class Team:
     def __init__(self, name):
         self.name = name
-        self.heroes = {}
+        self.heroes = []
 
     def remove_hero(self, name):
-
-            return self.heroes.pop(name) if name is self.heroes.keys() else 0
+        index = 0
+        length = len(self.heroes)
+        for hero in self.heroes:
+            if hero.name == name:
+                del self.heroes[index]
+            else:
+                index += 1
+        if len(self.heroes) == length:
+            return 0
 
 
     def view_all_heroes(self):
+        for hero in self.heroes:
+            print(hero.name)
+
         '''Prints out all heroes to the console.'''
-        print([self.heroes.keys()])
+
         # TODO: Loop over the list of heroes and print their names to the terminal.
 
     def add_hero(self, hero):
 
-        self.heroes[hero.name] = hero
+        self.heroes.append(hero)
 
 
 if __name__ == "__main__":
