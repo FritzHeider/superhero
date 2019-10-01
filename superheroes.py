@@ -27,6 +27,7 @@ class Hero:
         self.current_health = starting_health
         self.deaths = 0
         self.kills = 0
+        self.steal = 1
 
     def add_kill(self, num_kills):
         self.kills = self.kills + num_kills
@@ -57,6 +58,19 @@ class Hero:
 
     def take_damage(self, damage):
         self.current_health -= max(0, damage - self.defend())
+
+    def add_weapon(self, weapon):
+        self.abilities.append(weapon)
+
+    def steal(self):
+        if self.steal > 0:
+            print(f'Magic gem activated! you have {self.steal} magic sneak chances')
+            guess = input('please guess a number between 1 and 10 >')
+            pick = randint(0, 10)
+            if guess == pick:
+            print("wow you actually won!")
+
+
 
 
 #really simple code i love this either true or flase
@@ -156,6 +170,72 @@ class Team:
                 kd = self.kills
         print(f"{self.name} has a kill to death ratio of {kd}")
 
+
+class Arena:
+    def __init__(self):
+        self.team_one = None
+        self.team_two = None
+
+    def create_ability(self):
+        ability_name = input("Name your ability ").lower()
+        ability_damage = int(input("How much damage does your ability do? "))
+        return Ability(ability_name, ability_damage)
+    def create_weapon(self):
+        weapon_name = input("Please name your weapon ")
+        weapon_damage = int(input("How much damage does your weapon do? "))
+        return Weapon(weapon_name, weapon_damage)
+
+    def create_armor(self):
+        armor_name = input("What shall we name your armor? ")
+        armor_block = int(input("What level of block shall your armor have? "))
+        return Armor(armor_name, armor_block)
+
+    def create_hero(self):
+        hero_name = input("What would you like to name your hero? ").lower()
+        hero_health = int(input("Set hero health "))
+        hero = Hero(hero_name, hero_health)
+
+        choose_ability = "YES"
+        while choose_ability == "YES":
+            ability  = self.create_ability()
+            hero.add_ability(ability)
+            choose_ability = input("Would you like to add another ability? (Yes or No) ").upper()
+
+        choose_weapon = "YES"
+        while choose_weapon == "YES":
+            weapon  = self.create_weapon()
+            hero.add_weapon(weapon)
+            choose_weapon = input("Would you like to add another weapon? (Yes or No) ").upper()
+
+        choose_armor = "YES"
+        while choose_armor == "YES":
+            armor = self.create_armor()
+            hero.add_armor(armor)
+            choose_armor = input("Would you like to add more armor? (Yes or No) ").upper()
+
+        return hero
+
+def build_team_one(self):
+        team_number = int(input("How many heroes would you like on this team? "))
+        team_name = input("Please choose a team name: ")
+        self.team_one = Team(team_name)
+        for i in range(team_number):
+            hero = self.create_hero()
+            self.team_one.heroes.append(hero)
+            i += 1
+            i -= 1
+        return self.team_one
+
+def build_team_two(self):
+        team_number = int(input("How many heroes would you like on this team? "))
+        team_name = input("Please choose a team name: ")
+        self.team_two = Team(team_name)
+        for i in range(team_number):
+            hero = self.create_hero()
+            self.team_two.heroes.append(hero)
+            i += 1
+            i -= 1
+        return self.team_two
 
 
 
